@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ReactMapboxGl, { Layer, Feature, Marker } from "react-mapbox-gl";
+import ReactMapboxGl, { Layer, Feature, Marker, ZoomControl } from "react-mapbox-gl";
 
 const Map = ReactMapboxGl({
   accessToken: "pk.eyJ1IjoiZWdhcnJldHQ5NCIsImEiOiJjamg4NGZub2IwZXhoMndtc3I5a2VmcWdnIn0.TJm2cwfYJ7Fl_zhZV5xmbQ"
@@ -19,9 +19,10 @@ class MapComponent extends Component {
 		this.onClickMap = this.onClickMap.bind(this);
 	}
 
-	// componentDidUpdate() {
- //    	this.setFill();
- //  	}
+	onMarkerClick(map, feature){
+		//display the name of the restroom
+
+	}
 
 	fetchTheRestrooms() {
 		fetch(`https://www.refugerestrooms.org:443/api/v1/restrooms/by_location.json?lat=${this.state.latitude}&lng=${this.state.longitude}`)
@@ -31,12 +32,11 @@ class MapComponent extends Component {
 			console.log(data)
 			let restroomInfo = data.map((restroom) => {
 				return(
-					<div key={restroom.id}>
+					<div key={restroom.id} className='indiv-restroom'>
 						<p> <span className='info-subheader'>Location:</span> {restroom.name} </p>
 						<p> <span className='info-subheader'>Address:</span> {restroom.street}, {restroom.city}, {restroom.state} </p>
-						<p> <span className='info-subheader'>Accessible:</span> {restroom.accessible} </p>
-						<p> <span className='info-subheader'>Other Info:</span> {restroom.directions} </p>
-						<hr />
+						<p> <span className='info-subheader'>Accessible:</span> {restroom.accessible ? "Yes" : "No"} </p>
+						<p> <span className='info-subheader'>Other Info:</span> {restroom.directions==="" ? "N/A" : restroom.directions} </p>
 					</div>
 				)
 			})
@@ -45,12 +45,8 @@ class MapComponent extends Component {
 				let lati = restroom.latitude
 				console.log(long)
 				return(
-					
-					// <Layer type="symbol" id="marker" layout={{"icon-image": "marker-12"}} >
-			          
-			            <Feature key={index} coordinates={[long, lati]} />
-			         
-			        // </Layer>
+
+		            <Feature key={index} coordinates={[long, lati]} />
 				)
 			})
 
@@ -88,13 +84,15 @@ class MapComponent extends Component {
 					  style={"mapbox://styles/egarrett94/cjh835wfb6bm32snz9n3qwvys"}
 					  containerStyle={{
 					    height: "100vh",
-					    width: "70vw"
+					    width: "100vw"
 					  }}
+					  zoom={[14]}
 					  center={[-122.3378276824951, 47.60977973258193]}
 					  onClick = {this.onClickMap}
 
 					  >
-					    <Layer type="circle" id="marker">
+					  	<ZoomControl />
+					    <Layer type="symbol" id="marker" layout={{"icon-image": "heart-15"}} >
 							{this.state.bathroomMarkers}
 					    </Layer>
 
