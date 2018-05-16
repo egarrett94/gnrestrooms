@@ -88,7 +88,7 @@ class MapComponent extends Component {
 					    width: "100vw"
 					  }}
 					  zoom={[14]}
-					  center={[-122.3378276824951, 47.60977973258193]}
+					  center={[this.state.longitude, this.state.latitude]}
 					  onClick = {this.onClickMap}
 
 					  >
