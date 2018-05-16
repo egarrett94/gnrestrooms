@@ -36,6 +36,7 @@ class MapComponent extends Component {
 						<p> <span className='info-subheader'>Location:</span> {restroom.name} </p>
 						<p> <span className='info-subheader'>Address:</span> {restroom.street}, {restroom.city}, {restroom.state} </p>
 						<p> <span className='info-subheader'>Accessible:</span> {restroom.accessible ? "Yes" : "No"} </p>
+						<p> <span className='info-subheader'>Changing Table:</span> {restroom.changing_table ? "Yes" : "No"} </p>
 						<p> <span className='info-subheader'>Other Info:</span> {restroom.directions==="" ? "N/A" : restroom.directions} </p>
 					</div>
 				)
