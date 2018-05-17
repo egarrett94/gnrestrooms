@@ -16,7 +16,8 @@ class MapComponent extends Component {
 			bathroomResult: null,
 			bathroomMarkers: null,
 			currentPopup: null,
-			bathroomList: []
+			bathroomList: [],
+			loaded: false
 		}
 		this.onClickMap = this.onClickMap.bind(this);
 		this.onMarkerClick = this.onMarkerClick.bind(this);
@@ -25,6 +26,7 @@ class MapComponent extends Component {
 	fetchTheRestrooms() {
 		fetch(`https://www.refugerestrooms.org:443/api/v1/restrooms/by_location.json?lat=${this.state.latitude}&lng=${this.state.longitude}`)
 		.then(results => {
+			this.setState({loaded: true})
 			return results.json();
 		}).then(data => {
 			var restroomList = data;
@@ -91,12 +93,18 @@ class MapComponent extends Component {
 	}
 
 	render() {
+
+		var restrooms = this.state.bathroomResult
+		if (this.state.loaded === false) {
+			restrooms = <p className='loading'><i class="fas fa-spinner"></i>Loading...</p>
+		}
+
 		return(
 			<div>
 				<div className='bathroom-results'>
 					<div className='bathroom-results-overflow'>
 						<h3>Nearby Gender-Neutral Restrooms: </h3>
-						{this.state.bathroomResult}
+						{restrooms}
 						<p className='signature'>Made with <span>&hearts;</span> by <a href='http://www.github.com/egarrett94/gnrestrooms'>Emily Garrett</a></p>
 						<div className='socials'>
 							<a href='http://www.github.com/egarrett94'><i className="fab fa-github"></i></a>
