@@ -1,5 +1,5 @@
 # GNRestrooms
-GNRestrooms is a web app that uses the incredible [RefugeRestrooms API](refugerestrooms.org) to generate nearby gender-neutral restrooms.
+GNRestrooms is a web app that uses the incredible [RefugeRestrooms API](http://www.refugerestrooms.org) to generate nearby gender-neutral restrooms.
 ### Technologies Used: 
 * React.js
 * React-Mapbox
