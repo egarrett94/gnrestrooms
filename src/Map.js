@@ -28,7 +28,6 @@ class MapComponent extends Component {
 			return results.json();
 		}).then(data => {
 			var restroomList = data;
-			console.log(restroomList)
 			var restroomInfo = data.map((restroom,index) => {
 				return(
 					<div key={index} className='indiv-restroom' id={restroom.name} latitude={restroom.latitude} longitude={restroom.longitude}>
@@ -40,8 +39,6 @@ class MapComponent extends Component {
 					</div>
 				)
 			})
-
-			// console.log(restroomInfo)
 			var restroomMarkers = data.map((restroom, index) => {
 				let long = restroom.longitude
 				let lati = restroom.latitude
@@ -54,20 +51,10 @@ class MapComponent extends Component {
 	}
 
 	onMarkerClick(e, name){
-		//display the name of the restroom
-		console.log('this is the thing', name)
+
 		var featureLong = e.lngLat.lng
 		var featureLat = e.lngLat.lat
 		var currentRestroomName = name;
-		// var restroomList = this.state.bathroomList
-		// for (var i = 0; i < restroomList.length; i++){
-		// 	if (restroomList[i].latitude === featureLat && restroomList[i].longitude === featureLong) {
-		// 		currentRestroomName = restroomList[i].name 
-		// 	} else {
-		// 		currentRestroomName = 'N/A'
-		// 	}
-		// }
-
 		var popupInfo = <Popup
 						  coordinates={[featureLong, featureLat]}
 						  offset={{
@@ -80,7 +67,18 @@ class MapComponent extends Component {
 
 
 	componentDidMount() {
-		this.fetchTheRestrooms()
+		var userLat
+		var userLong
+		navigator.geolocation.getCurrentPosition((user) => {
+			console.log(user.coords.latitude)
+			userLat = user.coords.latitude
+			userLong = user.coords.longitude
+			this.setState({
+				longitude: userLong,
+				latitude: userLat
+			})
+			this.fetchTheRestrooms()
+		})
 	}
 
 	onClickMap(map, e) {
