@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ReactMapboxGl, { Layer, Feature, Marker, ZoomControl } from "react-mapbox-gl";
+import ReactMapboxGl, { Layer, Feature, ZoomControl, Popup } from "react-mapbox-gl";
 
 const Map = ReactMapboxGl({
   accessToken: "pk.eyJ1IjoiZWdhcnJldHQ5NCIsImEiOiJjamg4NGZub2IwZXhoMndtc3I5a2VmcWdnIn0.TJm2cwfYJ7Fl_zhZV5xmbQ"
@@ -14,14 +14,26 @@ class MapComponent extends Component {
 			latitude: 47.60977973258193,
 			longitude: -122.3378276824951,
 			bathroomResult: null,
-			bathroomMarkers: null
+			bathroomMarkers: null,
+			currentPopup: null
 		}
 		this.onClickMap = this.onClickMap.bind(this);
+		this.onMarkerClick = this.onMarkerClick.bind(this);
 	}
 
-	onMarkerClick(map, feature){
+	onMarkerClick(e, map, feature){
 		//display the name of the restroom
-
+		console.log('we doin it');
+		var featureLong = e.lngLat.lng
+		var featureLat = e.lngLat.lat
+		var popupInfo = <Popup
+						  coordinates={[featureLong, featureLat]}
+						  offset={{
+						    'bottom-left': [12, -38],  'bottom': [0, -38], 'bottom-right': [-12, -38]
+						  }}>
+						  <h1>Popup</h1>
+						</Popup>
+		this.setState({ currentPopup: popupInfo })
 	}
 
 	fetchTheRestrooms() {
@@ -29,7 +41,7 @@ class MapComponent extends Component {
 		.then(results => {
 			return results.json();
 		}).then(data => {
-			console.log(data)
+			// console.log(data)
 			let restroomInfo = data.map((restroom) => {
 				return(
 					<div key={restroom.id} className='indiv-restroom'>
@@ -44,13 +56,10 @@ class MapComponent extends Component {
 			var restroomMarkers = data.map((restroom, index) => {
 				let long = restroom.longitude
 				let lati = restroom.latitude
-				console.log(long)
 				return(
-
-		            <Feature key={index} coordinates={[long, lati]} />
+		            <Feature key={index} coordinates={[long, lati]} onClick={this.onMarkerClick} />
 				)
 			})
-
 			this.setState({bathroomResult: restroomInfo, bathroomMarkers: restroomMarkers})
 		})
 	}
@@ -66,9 +75,6 @@ class MapComponent extends Component {
 			longitude: long,
 			latitude: lati 
 		});
-		console.log('new longitude: ', long);
-		console.log('new latitude: ', lati);
-		console.log(e.lngLat)
 		this.fetchTheRestrooms()
 	}
 
@@ -82,25 +88,24 @@ class MapComponent extends Component {
 				<div className='map-container'>
 					<Map
 						id = 'map'
-					  style={"mapbox://styles/egarrett94/cjh835wfb6bm32snz9n3qwvys"}
-					  containerStyle={{
-					    height: "100vh",
-					    width: "100vw"
-					  }}
-					  zoom={[14]}
-					  center={[this.state.longitude, this.state.latitude]}
-					  onClick = {this.onClickMap}
-
-					  >
+					 	style={"mapbox://styles/egarrett94/cjh835wfb6bm32snz9n3qwvys"}
+					  	containerStyle={{
+					    	height: "100vh",
+					    	width: "100vw"
+					 	}}
+					  	zoom={[14]}
+					  	center={[this.state.longitude, this.state.latitude]}
+					  	onClick = {this.onClickMap}
+					>
 					  	<ZoomControl />
 					    <Layer type="symbol" id="marker" layout={{"icon-image": "heart-15"}} >
 							{this.state.bathroomMarkers}
 					    </Layer>
-
+						{this.state.currentPopup}
 					</Map>
 				</div>
 			</div>
-			)
+		)
 	}
 }
 
