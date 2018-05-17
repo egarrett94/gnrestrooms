@@ -9,6 +9,7 @@ const Socials = () => {
 				<a href='http://www.linkedin.com/in/emariegarrett94'><i className='fab fa-linkedin-in'></i></a>
 				<a href='mailto:e.marie.garrett@gmail.com'><i className='fas fa-envelope-square'></i></a>
 			</div>
+			<p className='signature'>Special Thanks to <a href='http://www.refugerestrooms.org'>RefugeRestrooms API</a></p>
 		</div>
 	)
 }
