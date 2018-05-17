@@ -140,6 +140,21 @@ h3 {
   color: #ef5350;
 }
 
+.info-subheader.popup, .info-desc {
+  text-align: center!important;
+  width: 150px;
+  margin: 0 auto;
+}
+
+.info-subheader.popup {
+  margin: 15px auto;
+}
+
+.info-desc.address {
+  color: lightgrey;
+}
+
+
 @media (max-width: 750px) {
   .map-container {
     display: block;

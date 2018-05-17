@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactMapboxGl, { Layer, Feature, ZoomControl, Popup } from "react-mapbox-gl";
+import Socials from './Socials.js';
 
 const Map = ReactMapboxGl({
   accessToken: "pk.eyJ1IjoiZWdhcnJldHQ5NCIsImEiOiJjamg4NGZub2IwZXhoMndtc3I5a2VmcWdnIn0.TJm2cwfYJ7Fl_zhZV5xmbQ"
@@ -56,12 +57,17 @@ class MapComponent extends Component {
 		var featureLong = e.lngLat.lng
 		var featureLat = e.lngLat.lat
 		var currentRestroomName = restroom.name;
+		var currentRestroomAddress = restroom.street + ', ' + restroom.city + ', ' + restroom.state
+		var currentRestroomInfo = restroom.directions==="" ? "" : restroom.directions
 		var popupInfo = <Popup
 						  coordinates={[featureLong, featureLat]}
 						  offset={{
 						    'bottom-left': [12, -38],  'bottom': [0, -38], 'bottom-right': [-12, -38]
-						  }}>
-						  <h1>{currentRestroomName}</h1>
+						  }}
+						>
+						  <h2 className='info-subheader popup'>{currentRestroomName}</h2>
+						  <p className='info-desc address'>{currentRestroomAddress}</p>
+						  <p className='info-desc'>{currentRestroomInfo}</p>
 						</Popup>
 		this.setState({ currentPopup: popupInfo })
 	}
@@ -105,12 +111,7 @@ class MapComponent extends Component {
 					<div className='bathroom-results-overflow'>
 						<h3>Nearby Gender-Neutral Restrooms: </h3>
 						{restrooms}
-						<p className='signature'>Made with <span>&hearts;</span> by <a href='http://www.github.com/egarrett94/gnrestrooms'>Emily Garrett</a></p>
-						<div className='socials'>
-							<a href='http://www.github.com/egarrett94'><i className="fab fa-github"></i></a>
-							<a href='http://www.linkedin.com/in/emariegarrett94'><i className='fab fa-linkedin-in'></i></a>
-							<a href='mailto:e.marie.garrett@gmail.com'><i className='fas fa-envelope-square'></i></a>
-						</div>
+						<Socials />
 					</div>
 				</div>
 				<div className='map-container'>
