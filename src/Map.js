@@ -15,25 +15,11 @@ class MapComponent extends Component {
 			longitude: -122.3378276824951,
 			bathroomResult: null,
 			bathroomMarkers: null,
-			currentPopup: null
+			currentPopup: null,
+			bathroomList: []
 		}
 		this.onClickMap = this.onClickMap.bind(this);
 		this.onMarkerClick = this.onMarkerClick.bind(this);
-	}
-
-	onMarkerClick(e, map, feature){
-		//display the name of the restroom
-		console.log('we doin it');
-		var featureLong = e.lngLat.lng
-		var featureLat = e.lngLat.lat
-		var popupInfo = <Popup
-						  coordinates={[featureLong, featureLat]}
-						  offset={{
-						    'bottom-left': [12, -38],  'bottom': [0, -38], 'bottom-right': [-12, -38]
-						  }}>
-						  <h1>Popup</h1>
-						</Popup>
-		this.setState({ currentPopup: popupInfo })
 	}
 
 	fetchTheRestrooms() {
@@ -41,10 +27,11 @@ class MapComponent extends Component {
 		.then(results => {
 			return results.json();
 		}).then(data => {
-			// console.log(data)
-			let restroomInfo = data.map((restroom) => {
+			var restroomList = data;
+			console.log(restroomList)
+			var restroomInfo = data.map((restroom,index) => {
 				return(
-					<div key={restroom.id} className='indiv-restroom'>
+					<div key={index} className='indiv-restroom' id={restroom.name} latitude={restroom.latitude} longitude={restroom.longitude}>
 						<p> <span className='info-subheader'>Location:</span> {restroom.name} </p>
 						<p> <span className='info-subheader'>Address:</span> {restroom.street}, {restroom.city}, {restroom.state} </p>
 						<p> <span className='info-subheader'>Accessible:</span> {restroom.accessible ? "Yes" : "No"} </p>
@@ -53,16 +40,44 @@ class MapComponent extends Component {
 					</div>
 				)
 			})
+
+			// console.log(restroomInfo)
 			var restroomMarkers = data.map((restroom, index) => {
 				let long = restroom.longitude
 				let lati = restroom.latitude
 				return(
-		            <Feature key={index} coordinates={[long, lati]} onClick={this.onMarkerClick} />
+		            <Feature key={index} coordinates={[long, lati]} featureName={restroom.name} onClick={(e) => this.onMarkerClick(e, restroom.name)} />
 				)
 			})
-			this.setState({bathroomResult: restroomInfo, bathroomMarkers: restroomMarkers})
+			this.setState({bathroomResult: restroomInfo, bathroomMarkers: restroomMarkers, bathroomList: restroomList})
 		})
 	}
+
+	onMarkerClick(e, name){
+		//display the name of the restroom
+		console.log('this is the thing', name)
+		var featureLong = e.lngLat.lng
+		var featureLat = e.lngLat.lat
+		var currentRestroomName = name;
+		// var restroomList = this.state.bathroomList
+		// for (var i = 0; i < restroomList.length; i++){
+		// 	if (restroomList[i].latitude === featureLat && restroomList[i].longitude === featureLong) {
+		// 		currentRestroomName = restroomList[i].name 
+		// 	} else {
+		// 		currentRestroomName = 'N/A'
+		// 	}
+		// }
+
+		var popupInfo = <Popup
+						  coordinates={[featureLong, featureLat]}
+						  offset={{
+						    'bottom-left': [12, -38],  'bottom': [0, -38], 'bottom-right': [-12, -38]
+						  }}>
+						  <h1>{currentRestroomName}</h1>
+						</Popup>
+		this.setState({ currentPopup: popupInfo })
+	}
+
 
 	componentDidMount() {
 		this.fetchTheRestrooms()
