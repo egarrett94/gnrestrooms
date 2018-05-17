@@ -7,10 +7,10 @@ GNRestrooms is a web app that uses the incredible [RefugeRestrooms API](http://w
 * HTML5/CSS3
 
 ## User Stories
-1.) Jack is a transman, and he needs to use the restroom. He lives in a conservative American town, and fears for his safety 
+1. Jack is a transman, and he needs to use the restroom. He lives in a conservative American town, and fears for his safety 
 when faced with having to use a gendered restroom. He would like to be able to quickly and easily locate and navigate to the
 nearest and safest gender-neutral restroom.
-2.) Lemon is genderfluid, and they don't particularly enjoy or feel comfortable using gendered public restrooms. They prefer 
+2. Lemon is genderfluid, and they don't particularly enjoy or feel comfortable using gendered public restrooms. They prefer 
 the privacy that gender-neutral restrooms provide, so they would love a light, user-friendly app that could show them the closest
 options. 
 
