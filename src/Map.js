@@ -43,18 +43,18 @@ class MapComponent extends Component {
 				let long = restroom.longitude
 				let lati = restroom.latitude
 				return(
-		            <Feature key={index} coordinates={[long, lati]} featureName={restroom.name} onClick={(e) => this.onMarkerClick(e, restroom.name)} />
+		            <Feature key={index} coordinates={[long, lati]} featureName={restroom.name} onClick={(e) => this.onMarkerClick(e, restroom)} />
 				)
 			})
 			this.setState({bathroomResult: restroomInfo, bathroomMarkers: restroomMarkers, bathroomList: restroomList})
 		})
 	}
 
-	onMarkerClick(e, name){
+	onMarkerClick(e, restroom){
 
 		var featureLong = e.lngLat.lng
 		var featureLat = e.lngLat.lat
-		var currentRestroomName = name;
+		var currentRestroomName = restroom.name;
 		var popupInfo = <Popup
 						  coordinates={[featureLong, featureLat]}
 						  offset={{
@@ -95,8 +95,10 @@ class MapComponent extends Component {
 		return(
 			<div>
 				<div className='bathroom-results'>
-					<h3>Nearby Gender-Neutral Restrooms: </h3>
-					{this.state.bathroomResult}
+					<div className='bathroom-results-overflow'>
+						<h3>Nearby Gender-Neutral Restrooms: </h3>
+						{this.state.bathroomResult}
+					</div>
 				</div>
 				<div className='map-container'>
 					<Map
@@ -110,7 +112,7 @@ class MapComponent extends Component {
 					  	center={[this.state.longitude, this.state.latitude]}
 					  	onClick = {this.onClickMap}
 					>
-					  	<ZoomControl />
+					  	<ZoomControl position="top-left" />
 					    <Layer type="symbol" id="marker" layout={{"icon-image": "heart-15"}} >
 							{this.state.bathroomMarkers}
 					    </Layer>
