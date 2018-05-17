@@ -10,7 +10,6 @@ body {
   margin: 0;
   padding: 0;
   background-color: #eceff1;
-  /*height: 102vh!important;*/
 }
 
 .indiv-restroom {
@@ -29,10 +28,47 @@ h3 {
   text-align: center;
   color: #b3e5fc;
   text-shadow: -1px 0 0.1px #000000, 1px 1px 0.1px #000000,
-             2px -1px 0.1px #000000, 3px 0 0.1px #000000;
+             1px -1px 0.1px #000000, 1px 0 0.1px #000000;
   border-bottom: dashed white 4px;
   padding: 25px 0px;
   margin: 0 15px;
+}
+
+.signature {
+  margin-top: 10px;
+  color: #b3e5fc;
+  text-align: center;
+  text-shadow: -1px 0 0.1px #989898, 1px 1px 0.1px #989898,
+             1px -1px 0.1px #989898, 1px 0 0.1px #989898;
+}
+
+.signature span {
+  color: #ef5350;
+}
+
+.signature a {
+  text-decoration: none;
+  color: #b3e5fc;
+}
+
+.signature a:hover {
+  color: #81d4fa;
+}
+
+.socials {
+  text-align: center;
+  margin: 0 auto;
+  width: 100px;
+}
+
+.socials a {
+  margin: 0 5px;
+  color: #81d4fa;
+  font-size: 24px;
+}
+
+.socials a:hover {
+  color: #4fc3f7;
 }
 
 .App > div{

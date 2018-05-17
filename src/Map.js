@@ -51,7 +51,6 @@ class MapComponent extends Component {
 	}
 
 	onMarkerClick(e, restroom){
-
 		var featureLong = e.lngLat.lng
 		var featureLat = e.lngLat.lat
 		var currentRestroomName = restroom.name;
@@ -98,6 +97,12 @@ class MapComponent extends Component {
 					<div className='bathroom-results-overflow'>
 						<h3>Nearby Gender-Neutral Restrooms: </h3>
 						{this.state.bathroomResult}
+						<p className='signature'>Made with <span>&hearts;</span> by <a href='http://www.github.com/egarrett94/gnrestrooms'>Emily Garrett</a></p>
+						<div className='socials'>
+							<a href='http://www.github.com/egarrett94'><i className="fab fa-github"></i></a>
+							<a href='http://www.linkedin.com/in/emariegarrett94'><i className='fab fa-linkedin-in'></i></a>
+							<a href='mailto:e.marie.garrett@gmail.com'><i className='fas fa-envelope-square'></i></a>
+						</div>
 					</div>
 				</div>
 				<div className='map-container'>
